@@ -3,7 +3,7 @@ package top;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class TOPTWGRASP {
  public static double NO_EVALUATED = -1.0;
@@ -66,13 +66,13 @@ public class TOPTWGRASP {
         System.out.println(" --> MEDIA: "+averageFitness);
         System.out.println(" --> MEJOR SOLUCION: "+bestSolution);
     }
-    
+
     public int aleatorySelectionRCL(int maxTRCL) {
-       Random r = new Random();
-       int low = 0;
-       int high = maxTRCL;
-       int posSelected = r.nextInt(high-low) + low;
-       return posSelected;
+        SecureRandom secureRandom = new SecureRandom();
+        int low = 0;
+        int high = maxTRCL;
+        int posSelected = secureRandom.nextInt(high - low) + low;
+        return posSelected;
     }
     
     public int fuzzySelectionBestFDRCL(ArrayList< double[] > rcl) {
