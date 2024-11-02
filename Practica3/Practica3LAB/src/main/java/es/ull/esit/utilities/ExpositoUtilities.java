@@ -40,13 +40,16 @@ public class ExpositoUtilities {
         } catch (Exception ex) {
             Logger.getLogger(ExpositoUtilities.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            try {
-                reader.close();
-            } catch (IOException ex) {
-                Logger.getLogger(ExpositoUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ExpositoUtilities.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
+
 
     public static String simplifyString(String string) {
         string = string.replaceAll("\t", " ");
@@ -79,11 +82,11 @@ public class ExpositoUtilities {
     }
 
     public static void writeTextToFile(String file, String text) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        writer.write(text);
-        writer.flush();
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(text);
+        }
     }
+
 
     public static String getFormat(String string) {
         if (!ExpositoUtilities.isInteger(string)) {
