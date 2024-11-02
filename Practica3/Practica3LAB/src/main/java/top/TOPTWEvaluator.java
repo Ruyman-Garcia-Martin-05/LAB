@@ -1,8 +1,19 @@
 package top;
 
+/**
+ * Clase que implementa un evaluador de soluciones al problema TOPTW.
+ */
 public class TOPTWEvaluator {
+    /**
+     * Valor que indica que una solución no ha sido evaluada.
+     */
     public static double NO_EVALUATED = -1.0;
 
+    /**
+     * Método que evalúa una solución al problema TOPTW.
+     *
+     * @param solution Solución a evaluar.
+     */
     public void evaluate(TOPTWSolution solution) {
         /*CumulativeCVRP problem = solution.getProblem();
         double objectiveFunctionValue = 0.0;

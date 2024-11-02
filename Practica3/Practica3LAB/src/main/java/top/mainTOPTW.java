@@ -1,7 +1,14 @@
 package top;
 
+/**
+ * Clase que implementa una solución al problema TOPTW.
+ */
 public class mainTOPTW {
-
+    /**
+     * Método principal de la clase mainTOPTW.
+     *
+     * @param args Argumentos de la línea de comandos.
+     */
     public static void main(String[] args) {
         
         String[] instances = new String[29];

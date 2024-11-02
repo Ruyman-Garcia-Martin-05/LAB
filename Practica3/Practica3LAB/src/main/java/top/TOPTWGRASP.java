@@ -5,12 +5,30 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.security.SecureRandom;
 
+/**
+ * Clase que implementa el algoritmo GRASP para resolver el problema TOPTW.
+ */
 public class TOPTWGRASP {
- public static double NO_EVALUATED = -1.0;
-    
+    /**
+     * Valor que indica que una solución no ha sido evaluada.
+     */
+    public static double NO_EVALUATED = -1.0;
+
+    /**
+     * Solución al problema TOPTW.
+     */
     private TOPTWSolution solution;
+
+    /**
+     * Tiempo de solución.
+     */
     private int solutionTime;
 
+    /**
+     * Constructor de la clase TOPTWGRASP.
+     *
+     * @param sol Solución al problema TOPTW.
+     */
     public TOPTWGRASP(TOPTWSolution sol){
         this.solution = sol;
         this.solutionTime = 0;
@@ -37,7 +55,13 @@ public class TOPTWGRASP {
         end;
         return Solution;
     end Greedy Randomized Construction.*/
-    
+
+    /**
+     * Método que implementa el algoritmo GRASP para resolver el problema TOPTW.
+     *
+     * @param maxIterations Número máximo de iteraciones.
+     * @param maxSizeRCL Tamaño máximo de la lista restringida de candidatos.
+     */
     public void GRASP(int maxIterations, int maxSizeRCL) {
         double averageFitness = 0.0;
         double bestSolution = 0.0;
@@ -67,6 +91,12 @@ public class TOPTWGRASP {
         System.out.println(" --> MEJOR SOLUCION: "+bestSolution);
     }
 
+    /**
+     * Método que selecciona aleatoriamente un elemento de la lista restringida de candidatos.
+     *
+     * @param maxTRCL Tamaño máximo de la lista restringida de candidatos.
+     * @return Posición seleccionada aleatoriamente.
+     */
     public int aleatorySelectionRCL(int maxTRCL) {
         SecureRandom secureRandom = new SecureRandom();
         int low = 0;
@@ -74,7 +104,13 @@ public class TOPTWGRASP {
         int posSelected = secureRandom.nextInt(high - low) + low;
         return posSelected;
     }
-    
+
+    /**
+     * Método que selecciona el mejor elemento de la lista restringida de candidatos.
+     *
+     * @param rcl Lista restringida de candidatos.
+     * @return Posición del mejor elemento.
+     */
     public int fuzzySelectionBestFDRCL(ArrayList< double[] > rcl) {
         double[] membershipFunction = new double[rcl.size()];
         double maxSc = this.getMaxScore();
@@ -91,7 +127,14 @@ public class TOPTWGRASP {
         }
         return posSelected;
     }
-    
+
+    /**
+     * Método que selecciona un elemento de la lista restringida de candidatos mediante un corte alfa aleatorio.
+     *
+     * @param rcl Lista restringida de candidatos.
+     * @param alpha Valor de corte alfa.
+     * @return Posición del elemento seleccionado.
+     */
     public int fuzzySelectionAlphaCutRCL(ArrayList< double[] > rcl, double alpha) {
         ArrayList< double[] > rclAlphaCut = new ArrayList< double[] >();
         ArrayList< Integer > rclPos = new ArrayList< Integer >();
@@ -113,6 +156,11 @@ public class TOPTWGRASP {
         return posSelected;
     }
 
+    /**
+     * Método que implementa la construcción de una solución inicial mediante un algoritmo voraz.
+     *
+     * @param maxSizeRCL Tamaño máximo de la lista restringida de candidatos.
+     */
     public void computeGreedySolution(int maxSizeRCL) {
         // inicialización
         this.solution.initSolution();
@@ -138,7 +186,7 @@ public class TOPTWGRASP {
 
         int maxTRCL = maxSizeRCL;
         boolean existCandidates = true;
-        
+
         while(!customers.isEmpty() && existCandidates) {
             if(!candidates.isEmpty()) {
                 //Construir lista restringida de candidatos
@@ -186,6 +234,7 @@ public class TOPTWGRASP {
             candidates.clear();
             candidates = this.comprehensiveEvaluation(customers, departureTimesPerClient);
             Collections.sort(candidates, new Comparator<double[]>() {
+                // Ordenar por coste incremental
                 public int compare(double[] a, double[] b) {
                     return Double.compare(a[a.length-2], b[b.length-2]);
                 }
@@ -193,7 +242,13 @@ public class TOPTWGRASP {
         }
         
     }
-    
+
+    /**
+     * Método que actualiza la solución tras la inserción de un cliente.
+     *
+     * @param candidateSelected Elemento seleccionado.
+     * @param departureTimes Tiempos de salida de los clientes.
+     */
     public void updateSolution(double[] candidateSelected, ArrayList< ArrayList< Double > > departureTimes) {
         // Inserción del cliente en la ruta  return: cliente, ruta, predecesor, coste
         this.solution.setPredecessor((int)candidateSelected[0], (int)candidateSelected[2]);
@@ -225,6 +280,13 @@ public class TOPTWGRASP {
     }
 
     //return: cliente, ruta, predecesor, coste tiempo, score
+    /**
+     * Método que evalúa la inserción de un cliente en una ruta.
+     *
+     * @param customers Lista de clientes.
+     * @param departureTimes Tiempos de salida de los clientes.
+     * @return Lista de candidatos.
+     */
     public ArrayList< double[] > comprehensiveEvaluation(ArrayList<Integer> customers, ArrayList< ArrayList< Double > > departureTimes) {
         ArrayList< double[] > candidatesList = new ArrayList< double[] >();
         double[] infoCandidate = new double[5];
@@ -309,23 +371,48 @@ public class TOPTWGRASP {
 
         return candidatesList;        
     }
-    
+
+    /**
+     * Método que devuelve la solución al problema TOPTW.
+     *
+     * @return Solución al problema TOPTW.
+     */
     public TOPTWSolution getSolution() {
         return solution;
     }
 
+    /**
+     * Método que establece la solución al problema TOPTW.
+     *
+     * @param solution Solución al problema TOPTW.
+     */
     public void setSolution(TOPTWSolution solution) {
         this.solution = solution;
     }
 
+    /**
+     * Método que devuelve el tiempo de solución.
+     *
+     * @return Tiempo de solución.
+     */
     public int getSolutionTime() {
         return solutionTime;
     }
 
+    /**
+     * Método que establece el tiempo de solución.
+     *
+     * @param solutionTime Tiempo de solución.
+     */
     public void setSolutionTime(int solutionTime) {
         this.solutionTime = solutionTime;
     }
-    
+
+    /**
+     * Método que devuelve el score máximo.
+     *
+     * @return Score máximo.
+     */
     public double getMaxScore() {
         double maxSc = -1.0;
         for(int i = 0; i < this.solution.getProblem().getScore().length; i++) {

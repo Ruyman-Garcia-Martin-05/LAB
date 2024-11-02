@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 import es.ull.esit.utilities.ExpositoUtilities;
 
+/**
+ * Clase que implementa el problema de recogida y entrega con ventanas temporales.
+ */
 public class TOPTW {
     private int nodes;
     private double[] x;
@@ -19,6 +22,12 @@ public class TOPTW {
     private double maxRoutes;
     private double[][] distanceMatrix;
 
+    /**
+     * Constructor de la clase TOPTW.
+     *
+     * @param nodes Número de nodos.
+     * @param routes Número de rutas.
+     */
     public TOPTW(int nodes, int routes) {
         this.nodes = nodes;
         this.depots = 0;
@@ -37,7 +46,12 @@ public class TOPTW {
         this.maxRoutes = routes;
         this.vehicles = routes;
     }
-    
+
+    /**
+     * Método que comprueba si un nodo es un depósito.
+     * @param a
+     * @return True si el nodo es un depósito, false en caso contrario.
+     */
     public boolean isDepot(int a) {
         if(a > this.nodes) {
             return true;
@@ -45,6 +59,12 @@ public class TOPTW {
         return false;
     }
 
+    /**
+     * Método que devuelve la distancia entre dos nodos.
+     *
+     * @param route Ruta.
+     * @return Distancia entre los nodos.
+     */
     public double getDistance(int[] route) {
         double distance = 0.0;
         for (int i = 0; i < route.length - 1; i++) {
@@ -55,6 +75,12 @@ public class TOPTW {
         return distance;
     }
 
+    /**
+     * Método que devuelve la distancia entre dos nodos.
+     *
+     * @param route Ruta.
+     * @return Distancia entre los nodos.
+     */
     public double getDistance(ArrayList<Integer> route) {
         double distance = 0.0;
         for (int i = 0; i < route.size() - 1; i++) {
@@ -65,6 +91,12 @@ public class TOPTW {
         return distance;
     }
 
+    /**
+     * Método que devuelve la distancia total de un conjunto de rutas.
+     *
+     * @param routes Conjunto de rutas.
+     * @return Distancia total de las rutas.
+     */
     public double getDistance(ArrayList<Integer>[] routes) {
         double distance = 0.0;
         for (ArrayList<Integer> route : routes) {
@@ -73,7 +105,9 @@ public class TOPTW {
         return distance;
     }
 
-    
+    /**
+     * Método que calcula la matriz de distancias entre los nodos.
+     */
     public void calculateDistanceMatrix() {
         for (int i = 0; i < this.nodes + 1; i++) {
             for (int j = 0; j < this.nodes + 1; j++) {
@@ -89,108 +123,219 @@ public class TOPTW {
         }
     }
 
+    /**
+     * Método que devuelve el mayor tiempo por ruta.
+     *
+     * @return Tiempo máximo por ruta.
+     */
     public double getMaxTimePerRoute() {
         return maxTimePerRoute;
     }
 
+    /**
+     * Método que establece el mayor tiempo por ruta.
+     *
+     */
     public void setMaxTimePerRoute(double maxTimePerRoute) {
         this.maxTimePerRoute = maxTimePerRoute;
     }
 
+    /**
+     * Método que devuelve la ruta máxima.
+     *
+     * @return Ruta máxima.
+     */
     public double getMaxRoutes() {
         return maxRoutes;
     }
 
+    /**
+     * Método que establece la ruta máxima.
+     *
+     */
     public void setMaxRoutes(double maxRoutes) {
         this.maxRoutes = maxRoutes;
     }
-    
+
+    /**
+     * Método que devuleve la posición de un nodo en la matriz de distancias.
+     *
+     * @return Posición del nodo en la matriz de distancias.
+     */
     public int getPOIs() {
         return this.nodes;
     }
 
+    /**
+     * Método que devuelve la matriz de distancias entre los nodos.
+     * @return Distancias entre los nodos.
+     */
     public double getDistance(int i, int j) {
         if(this.isDepot(i)) { i=0; }
         if(this.isDepot(j)) { j=0; }
         return this.distanceMatrix[i][j];
     }
 
+    /**
+     * Método que devuelve el tiempo entre dos nodos.
+     *
+     * @return Tiempo entre los nodos.
+     */
     public double getTime(int i, int j) {
         if(this.isDepot(i)) { i=0; }
         if(this.isDepot(j)) { j=0; }
         return this.distanceMatrix[i][j];
     }
 
+
+    /**
+     * Método que devuelve el número de nodos.
+     *
+     * @return Número de nodos.
+     */
     public int getNodes() {
         return this.nodes;
     }
 
+    /**
+     * Método que establece el número de nodos.
+     *
+     */
     public void setNodes(int nodes) {
         this.nodes = nodes;
     }
 
+    /**
+     * Método que devuelve posición X de un nodo.
+     *
+     * @return Número de depósitos.
+     */
     public double getX(int index) {
         if(this.isDepot(index)) { index=0; }
         return this.x[index];
     }
 
+    /**
+     * Método que establece la posición X de un nodo.
+     *
+     */
     public void setX(int index, double x) {
         this.x[index] = x;
     }
 
+    /**
+     * Método que devuelve la posición Y de un nodo.
+     *
+     * @return Posición Y de un nodo.
+     */
     public double getY(int index) {
         if(this.isDepot(index)) { index=0; }
         return this.y[index];
     }
 
+    /**
+     * Método que establece la posición Y de un nodo.
+     *
+     */
     public void setY(int index, double y) {
         this.y[index] = y;
     }
 
+    /**
+     * Método que devuelve la puntuación de un nodo.
+     *
+     * @return Puntuación de un nodo.
+     */
     public double getScore(int index) {
         if(this.isDepot(index)) { index=0; }
         return this.score[index];
     }
-    
+
+    /**
+     * Método que devuelve la puntuación de un nodo.
+     *
+     * @return Puntuación de un nodo.
+     */
     public double[] getScore() {
         return this.score;
     }
 
+    /**
+     * Método que establece la puntuación de un nodo.
+     *
+     */
     public void setScore(int index, double score) {
         this.score[index] = score;
     }
 
+    /**
+     * Método que devuelve el tiempo de inicio de un nodo.
+     *
+     * @return Tiempo de inicio de un nodo.
+     */
     public double getReadyTime(int index) {
         if(this.isDepot(index)) { index=0; }
         return this.readyTime[index];
     }
 
+    /**
+     * Método que establece el tiempo de inicio de un nodo.
+     *
+     */
     public void setReadyTime(int index, double readyTime) {
         this.readyTime[index] = readyTime;
     }
 
+    /**
+     * Método que devuelve el tiempo de finalización de un nodo.
+     *
+     * @return Tiempo de finalización de un nodo.
+     */
     public double getDueTime(int index) {
         if(this.isDepot(index)) { index=0; }
         return this.dueTime[index];
     }
 
+    /**
+     * Método que establece el tiempo de finalización de un nodo.
+     *
+     */
     public void setDueTime(int index, double dueTime) {
         this.dueTime[index] = dueTime;
     }
 
+    /**
+     * Método que devuelve el tiempo de servicio de un nodo.
+     *
+     * @return Tiempo de servicio de un nodo.
+     */
     public double getServiceTime(int index) {
         if(this.isDepot(index)) { index=0; }
         return this.serviceTime[index];
     }
 
+    /**
+     * Método que establece el tiempo de servicio de un nodo.
+     *
+     */
     public void setServiceTime(int index, double serviceTime) {
         this.serviceTime[index] = serviceTime;
     }
 
+    /**
+     * Método que devuelve el número de vehículos.
+     *
+     * @return Número de vehículos.
+     */
     public int getVehicles() {
         return this.vehicles;
     }
-    
+
+    /**
+     * Método que devuelve el texto del problema.
+     *
+     * @return Texto del problema.
+     */
     @Override
     public String toString() {
         final int COLUMN_WIDTH = 15;
@@ -221,11 +366,21 @@ public class TOPTW {
         return text;
     }
 
+    /**
+     * Método que devuelve el número de depósitos.
+     *
+     * @return Número de depósitos.
+     */
     public int addNode() {
         this.nodes++;
         return this.nodes;
     }
-    
+
+    /**
+     * Método que devuelve el número de depósitos.
+     *
+     * @return Número de depósitos.
+     */
     public int addNodeDepot() {
         this.depots++;
         return this.depots;

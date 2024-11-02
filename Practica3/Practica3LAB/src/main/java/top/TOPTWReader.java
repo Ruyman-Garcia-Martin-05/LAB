@@ -7,8 +7,16 @@ import java.io.IOException;
 
 import es.ull.esit.utilities.ExpositoUtilities;
 
+/**
+ * Clase que implementa la lectura de un problema TOPTW.
+ */
 public class TOPTWReader {
-    
+    /**
+     * Método que lee un problema TOPTW de un fichero.
+     *
+     * @param filePath Ruta del fichero.
+     * @return Problema TOPTW leído.
+     */
     public static TOPTW readProblem(String filePath) {
         TOPTW problem = null;
         BufferedReader reader = null;
