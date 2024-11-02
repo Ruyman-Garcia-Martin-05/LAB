@@ -87,7 +87,6 @@ public class ExpositoUtilities {
         }
     }
 
-
     public static String getFormat(String string) {
         if (!ExpositoUtilities.isInteger(string)) {
             if (ExpositoUtilities.isDouble(string)) {
