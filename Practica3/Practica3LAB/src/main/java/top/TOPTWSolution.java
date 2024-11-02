@@ -52,15 +52,24 @@ public class TOPTWSolution {
         }
         return false;
     }
-    
-    public boolean equals(TOPTWSolution otherSolution) {
-        for (int i = 0; i < this.predecessors.length; i++) {
-            if (this.predecessors[i] != otherSolution.predecessors[i]) {
-                return false;
-            }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-        return true;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        TOPTWSolution otherSolution = (TOPTWSolution) obj;
+        return Arrays.equals(this.predecessors, otherSolution.predecessors);
     }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(predecessors);
+    }
+
 
     public int getAvailableVehicles() {
         return this.availableVehicles;
