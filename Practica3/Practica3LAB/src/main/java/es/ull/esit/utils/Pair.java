@@ -42,6 +42,7 @@ public class Pair<F, S> {
         return Objects.equals(p.first, first) && Objects.equals(p.second, second);
     }
 
+
     /**
      * Método que devuelve el hash del par.
      *
